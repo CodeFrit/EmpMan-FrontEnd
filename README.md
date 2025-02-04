@@ -1,0 +1,1 @@
+React based front end for: https://github.com/CodeFrit/EmpMan
