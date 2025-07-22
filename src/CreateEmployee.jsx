@@ -6,9 +6,9 @@ function CreateEmployee() {
 
   let navi = useNavigate();
 
-  const creatEmp = (formData) =>{
+  const creatEmp = async (formData) =>{
     let inp = Object.fromEntries(formData);
-    axios.post("http://localhost/api/emp/create",{
+    await axios.post("http://localhost/api/emp/create",{
       "fname":inp.form_fname,
       "lname":inp.form_lname,
       "email":inp.form_email

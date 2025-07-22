@@ -27,11 +27,9 @@ function UpdateEmployee() {
       });
     },[]);
 
-    const updEmp = (formData) =>{
+    const updEmp = async (formData) =>{
     let inp = Object.fromEntries(formData);
-    updateEmp(eid,inp).then((resp)=>{
-      console.log("Great!")
-    }).catch((err)=>{
+    await updateEmp(eid,inp).catch((err)=>{
       console.error(err);
     });
     navi("/");

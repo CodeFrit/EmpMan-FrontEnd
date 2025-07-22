@@ -9,14 +9,15 @@ const [emps,setEmps] = useState([])
 const navi = useNavigate();
 
 useEffect(()=>{
-   getallemps();
+    let debounce1 = setTimeout(() => {
+        getallemps();
+    }, 100);
+    return () => clearTimeout(debounce1);
 },[]);
 
 const getallemps = () =>{
     listemps().then((response)=>{
-        setTimeout(() => {
-            setEmps(response.data);
-        }, 320);
+        setEmps(response.data);
     }).catch(error=>console.error(error));
 }
 
@@ -29,14 +30,16 @@ const deleteEmp = (id) =>{
 }
 
   return (
-    <div className="container text-center">
+    <>
+    {emps.length>0 ? 
+        <div className="container text-center">
         <h2 className='pt-2 pb-1'>List of Employees</h2>
         <table className='table table-bordered table-striped'>
-        <thead>
+        <thead style={{whiteSpace:"pre"}}>
         <tr>
-        <th>Id</th>
-        <th>Forename</th>
-        <th>Surname</th>
+        <th>   Id   </th>
+        <th> Forename </th>
+        <th> Surname </th>
         <th>Email</th>
         <th>Actions</th>
         </tr></thead>
@@ -51,16 +54,34 @@ const deleteEmp = (id) =>{
                     <td>{e.email}</td>
                     <td>
                         <button className='btn btn-info' onClick={()=>{navi("/update-employee/"+e.id)}}>Update</button>
-                        <button className='btn btn-danger ms-3' onClick={()=>{deleteEmp(e.id)}}>Delete</button>
+                        <span className='invisible'>---</span>
+                        <button className='btn btn-danger' onClick={()=>{deleteEmp(e.id)}}>Delete</button>
                     </td>
                     </tr>
                 );
             })}
         </tbody>
-    </table>
-    <button className='btn btn-success' onClick={()=>{navi("/add-employee")}}>Add employee</button>
-    </div>
+        </table>
+        <button className='btn btn-success mb-4' onClick={()=>{navi("/add-employee")}}>Add employee</button>
+        </div>
+        : 
+        <div style={styles.cent}>
+            <h1>No data</h1>
+            <br />
+            <button className='btn btn-success mb-4' onClick={()=>{navi("/add-employee")}}>Add an employee</button>
+        </div>}
+    </>
   )
+}
+
+const styles = {
+    cent:{
+    width:"100%",
+    height:"90vh",
+    display:"flex",
+    flexDirection:"column",
+    justifyContent:"center",
+    alignItems:"center"}
 }
 
 export default Emplist
