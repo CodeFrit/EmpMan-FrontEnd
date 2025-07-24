@@ -2,6 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { delemp, listemps } from './EmployeeServices';
 import { useNavigate } from 'react-router';
 
+const Empinfo = ({data}) => {
+    const navi = useNavigate();
+    return (
+        <tr key={data.id}>
+            <td>{data.id}</td>
+            <td>{data.fname}</td>
+            <td>{data.lname}</td>
+            <td>{data.email}</td>
+            <td>
+                <button className='btn btn-info' onClick={()=>{navi("/update-employee/"+data.id)}}>Update</button>
+                <span className='invisible'>---</span>
+                <button className='btn btn-danger' onClick={()=>{deleteEmp(data.id)}}>Delete</button>
+            </td>
+        </tr>
+    )
+}
+
 function Emplist() {
 
 const [emps,setEmps] = useState([])
@@ -45,21 +62,7 @@ const deleteEmp = (id) =>{
         </tr></thead>
         <tbody>
 
-            {emps.map(e=>{
-                return(
-                    <tr key={e.id}>
-                    <td>{e.id}</td>
-                    <td>{e.fname}</td>
-                    <td>{e.lname}</td>
-                    <td>{e.email}</td>
-                    <td>
-                        <button className='btn btn-info' onClick={()=>{navi("/update-employee/"+e.id)}}>Update</button>
-                        <span className='invisible'>---</span>
-                        <button className='btn btn-danger' onClick={()=>{deleteEmp(e.id)}}>Delete</button>
-                    </td>
-                    </tr>
-                );
-            })}
+            {emps.map(e=><Empinfo key={e.id} data = {e}/>)}
         </tbody>
         </table>
         <button className='btn btn-success mb-4' onClick={()=>{navi("/add-employee")}}>Add employee</button>
