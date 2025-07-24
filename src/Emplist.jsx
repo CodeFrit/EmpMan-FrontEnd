@@ -61,7 +61,6 @@ const deleteEmp = (id) =>{
         <th>Actions</th>
         </tr></thead>
         <tbody>
-
             {emps.map(e=><Empinfo key={e.id} data = {e}/>)}
         </tbody>
         </table>
