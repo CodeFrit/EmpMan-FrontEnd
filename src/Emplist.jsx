@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { delemp, listemps } from './EmployeeServices';
 import { useNavigate } from 'react-router';
 
-const Empinfo = ({data}) => {
+const Empinfo = ({data,delfunc}) => {
     const navi = useNavigate();
     return (
         <tr key={data.id}>
@@ -13,7 +13,7 @@ const Empinfo = ({data}) => {
             <td>
                 <button className='btn btn-info' onClick={()=>{navi("/update-employee/"+data.id)}}>Update</button>
                 <span className='invisible'>---</span>
-                <button className='btn btn-danger' onClick={()=>{deleteEmp(data.id)}}>Delete</button>
+                <button className='btn btn-danger' onClick={()=>{delfunc(data.id)}}>Delete</button>
             </td>
         </tr>
     )
@@ -61,7 +61,7 @@ const deleteEmp = (id) =>{
         <th>Actions</th>
         </tr></thead>
         <tbody>
-            {emps.map(e=><Empinfo key={e.id} data = {e}/>)}
+            {emps.map(e=><Empinfo key={e.id} data = {e} delfunc={deleteEmp}/>)}
         </tbody>
         </table>
         <button className='btn btn-success mb-4' onClick={()=>{navi("/add-employee")}}>Add employee</button>
@@ -77,13 +77,14 @@ const deleteEmp = (id) =>{
 }
 
 const styles = {
-    cent:{
-    width:"100%",
-    height:"90vh",
-    display:"flex",
-    flexDirection:"column",
-    justifyContent:"center",
-    alignItems:"center"}
+    cent: {
+        width:"100%",
+        height:"90vh",
+        display:"flex",
+        flexDirection:"column",
+        justifyContent:"center",
+        alignItems:"center"
+    }
 }
 
 export default Emplist
